@@ -20,8 +20,8 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import anthropic
 
-from ml.predictor import MLPredictor
-from ml.nlp_signals import NLPSignalExtractor
+from predictor import MLPredictor
+from nlp_signals import NLPSignalExtractor
 
 # ── App setup ─────────────────────────────────────────────────────────────────
 app = Flask(__name__)
@@ -32,7 +32,7 @@ logger = logging.getLogger(__name__)
 
 # ── Globals ───────────────────────────────────────────────────────────────────
 client        = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
-ml_predictor  = MLPredictor(model_path="ml/models/classifier.pkl")
+ml_predictor = MLPredictor(model_path="models/classifier.pkl")
 nlp_extractor = NLPSignalExtractor()
 total_analyzed = 0
 
