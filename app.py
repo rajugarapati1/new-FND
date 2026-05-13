@@ -20,7 +20,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import anthropic
 
-from predictor import MLPredictor
+from .predictor import MLPredictor
 from nlp_signals import NLPSignalExtractor
 
 # ── App setup ─────────────────────────────────────────────────────────────────
