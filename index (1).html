@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TruthLens — AI Fake News Detector</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-icon"><i class="ti ti-shield-check"></i></div>
+      <span class="nav-logo-text">TruthLens</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#how-it-works">How it works</a></li>
+      <li><a href="#detector">Detector</a></li>
+      <li><a href="#detector" class="nav-cta">Try now</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero" id="hero">
+  <div class="hero-badge">
+    <span class="badge-dot"></span>
+    AI-Powered · NLP · Machine Learning
+  </div>
+  <h1>Detect <em>fake</em> news.<br>Trust <span>real</span> stories.</h1>
+  <p>TruthLens uses advanced NLP techniques and a Claude AI backbone to analyze news articles for language bias, emotional manipulation, logical consistency, and source credibility — in seconds.</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="hero-stat-num" id="live-count">0</span>
+      <span class="hero-stat-label">Articles analyzed</span>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">94.2%</span>
+      <span class="hero-stat-label">Model accuracy</span>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">7</span>
+      <span class="hero-stat-label">NLP signals</span>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">&lt; 3s</span>
+      <span class="hero-stat-label">Average response</span>
+    </div>
+  </div>
+</section>
+
+<div class="main-wrap" id="detector">
+  <div>
+    <div class="card input-panel">
+      <div class="panel-title">
+        <i class="ti ti-news"></i>
+        Paste your news content
+      </div>
+      <textarea
+        id="news-input"
+        placeholder="Paste a news article, headline, tweet, or any text you want to fact-check…"
+        oninput="this.classList.remove('error')"
+      ></textarea>
+
+      <div class="url-row">
+        <input type="url" class="url-input" id="url-input" placeholder="Or paste an article URL…"/>
+        <button class="url-fetch-btn" onclick="handleUrlNote()">
+          <i class="ti ti-link"></i>
+          Paste URL
+        </button>
+      </div>
+
+      <div class="examples-row">
+        <span class="examples-label">Quick examples:</span>
+        <button class="ex-chip" onclick="loadExample(0)"><i class="ti ti-flare"></i>Clickbait</button>
+        <button class="ex-chip" onclick="loadExample(1)"><i class="ti ti-building-hospital"></i>Health</button>
+        <button class="ex-chip" onclick="loadExample(2)"><i class="ti ti-rocket"></i>Science</button>
+        <button class="ex-chip" onclick="loadExample(3)"><i class="ti ti-building-bank"></i>Politics</button>
+        <button class="ex-chip" onclick="loadExample(4)"><i class="ti ti-check"></i>Credible</button>
+      </div>
+
+      <div class="options-section" id="how-it-works">
+        <div class="panel-title" style="margin-bottom:0.6rem">
+          <i class="ti ti-adjustments-horizontal"></i>
+          Analysis depth
+        </div>
+        <div class="options-grid">
+          <button class="mode-btn" data-mode="quick" onclick="setMode(this)">
+            <span class="mode-btn-icon"><i class="ti ti-bolt"></i></span>
+            <span class="mode-btn-title">Quick</span>
+            <span class="mode-btn-sub">~1 second</span>
+          </button>
+          <button class="mode-btn active" data-mode="standard" onclick="setMode(this)">
+            <span class="mode-btn-icon"><i class="ti ti-shield-search"></i></span>
+            <span class="mode-btn-title">Standard</span>
+            <span class="mode-btn-sub">Recommended</span>
+          </button>
+          <button class="mode-btn" data-mode="deep" onclick="setMode(this)">
+            <span class="mode-btn-icon"><i class="ti ti-microscope"></i></span>
+            <span class="mode-btn-title">Deep dive</span>
+            <span class="mode-btn-sub">Full analysis</span>
+          </button>
+        </div>
+      </div>
+
+      <button class="analyze-btn" id="analyze-btn" onclick="analyzeNews()">
+        <i class="ti ti-shield-search"></i>
+        Analyze credibility
+      </button>
+    </div>
+
+    <div id="result-area"></div>
+  </div>
+
+  <div class="sidebar">
+    <div class="card how-card">
+      <div class="how-card-title">How TruthLens works</div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-title">Text preprocessing</div>
+            <div class="step-desc">Tokenization, stop-word removal, stemming, and TF-IDF feature extraction.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-title">NLP signal extraction</div>
+            <div class="step-desc">Emotional language detection, bias scoring, logical coherence analysis.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-title">ML classification</div>
+            <div class="step-desc">Scikit-learn classifier trained on thousands of verified real/fake articles.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <div class="step-title">AI reasoning (Claude)</div>
+            <div class="step-desc">Claude AI synthesizes signals into a human-readable credibility verdict.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card nlp-card">
+      <div class="nlp-card-title">NLP signals analyzed</div>
+      <div class="nlp-item">
+        <div class="nlp-icon"><i class="ti ti-mood-nervous"></i></div>
+        <div class="nlp-text">
+          <div class="nlp-name">Emotional language</div>
+          <div class="nlp-desc">Detects fear, anger, and sensationalist vocabulary.</div>
+        </div>
+      </div>
+      <div class="nlp-item">
+        <div class="nlp-icon"><i class="ti ti-certificate"></i></div>
+        <div class="nlp-text">
+          <div class="nlp-name">Source credibility</div>
+          <div class="nlp-desc">Evaluates references to experts, institutions, and verifiable data.</div>
+        </div>
+      </div>
+      <div class="nlp-item">
+        <div class="nlp-icon"><i class="ti ti-list-check"></i></div>
+        <div class="nlp-text">
+          <div class="nlp-name">Factual consistency</div>
+          <div class="nlp-desc">Checks for contradictions and plausibility of stated facts.</div>
+        </div>
+      </div>
+      <div class="nlp-item">
+        <div class="nlp-icon"><i class="ti ti-cursor-text"></i></div>
+        <div class="nlp-text">
+          <div class="nlp-name">Clickbait patterns</div>
+          <div class="nlp-desc">Identifies exaggerated headlines and engagement-bait phrases.</div>
+        </div>
+      </div>
+      <div class="nlp-item">
+        <div class="nlp-icon"><i class="ti ti-brain"></i></div>
+        <div class="nlp-text">
+          <div class="nlp-name">Logical coherence</div>
+          <div class="nlp-desc">Evaluates argumentation structure and logical flow.</div>
+        </div>
+      </div>
+      <div class="nlp-item">
+        <div class="nlp-icon"><i class="ti ti-scale"></i></div>
+        <div class="nlp-text">
+          <div class="nlp-name">Bias indicators</div>
+          <div class="nlp-desc">Detects one-sided framing, omissions, and partisan language.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card history-card" id="history-card">
+      <div class="history-card-title">
+        <i class="ti ti-history"></i>
+        Recent analyses
+      </div>
+      <div id="history-list">
+        <div class="history-empty">No analyses yet. Run your first check above.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">TruthLens</div>
+    <div class="footer-text">AI-Powered Fake News Detection · Built with Python, Scikit-learn, NLP </div>
+    <div class="footer-tech">
+      <span class="tech-badge">Python 3.11</span>
+      <span class="tech-badge">Scikit-learn</span>
+      <span class="tech-badge">NLTK</span>
+      <span class="tech-badge">TF-IDF</span>
+      
+      <span class="tech-badge">NLP</span>
+      <span class="tech-badge">Naive Bayes</span>
+      <span class="tech-badge">Logistic Regression</span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
