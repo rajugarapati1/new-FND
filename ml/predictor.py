@@ -15,7 +15,6 @@ from typing import Optional
 
 logger = logging.getLogger(__name__)
 
-
 class MLPredictor:
     """
     Loads a trained TruthLens scikit-learn pipeline and exposes a predict() method.
